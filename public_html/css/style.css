@@ -1,0 +1,18 @@
+.catalogue {
+	width: 600px;
+	margin: 0 auto;
+}
+
+.bottle {
+	display: inline-block;
+	margin: 0 5px;
+	text-align: center;
+}
+
+img {
+	height: 100px;
+}
+
+label span {
+	display: block;
+}
