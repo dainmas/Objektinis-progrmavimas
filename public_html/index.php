@@ -110,6 +110,8 @@ $form = [
                 'validate_not_empty',
             ],
         ],
+        
+        
     ],
     'buttons' => [
         'insert' => [
@@ -170,7 +172,7 @@ switch ($button) {
                     <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
                     <div class='name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
                     <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
-                    <div class="Amount"><?php print "Turis {$drink->getAmount()} ml"; ?></div>
+                    <div class="Amount"><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
                 </div>
 <?php endforeach; ?>
         </div>
