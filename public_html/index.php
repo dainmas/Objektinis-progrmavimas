@@ -59,6 +59,17 @@ var_dump($user->getData());
 //$modelDrinks->update($my_drink); // Panaudojam update metodą
 //\App\App::$db->createTable('test_table');
 
+$strongDrink = new App\Drinks\StrongDrink(['amount_ml'=>100]);
+var_dump($strongDrink);
+var_dump($strongDrink->drink());
+var_dump($strongDrink);
+
+$lightDrink = new App\Drinks\LightDrink(['amount_ml'=>100]);
+
+var_dump($lightDrink->drink());
+var_dump($lightDrink);
+
+
 $form = [
     'attr' => [],
     'fields' => [
@@ -141,6 +152,7 @@ function form_fail($filtered_input, &$form) {
 }
 
 $modelDrinks = new \App\Drinks\Model();
+
 $filtered_input = get_filtered_input($form);
 $button = get_form_action();
 switch ($button) {
@@ -170,9 +182,9 @@ switch ($button) {
             <?php foreach ($modelDrinks->get() as $drink): ?>
                 <div class="bottle">
                     <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
-                    <div class='name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
+                    <div class="name"><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
                     <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
-                    <div class="Amount"><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
+                    <div class="amount"><?php print "Tūris: {$drink->getAmount()} ml"; ?></div>
                 </div>
             <?php endforeach; ?>
         </div>

@@ -1,6 +1,7 @@
 .catalogue {
-    width: 1000px;
+    width: 900px;
     margin: 0 auto;
+  
 }
 
 .bottle {
@@ -11,6 +12,7 @@
 
 img {
     height: 200px;
+    
 }
 
 label span {
@@ -18,15 +20,19 @@ label span {
 }
 
 .insert{
+    width: 60px;
+    height: 30px;
     margin: 5px;
     background-color: green;
-    
+
 }
 
 .delete{
+    width: 60px;
+    height: 30px;
     margin: 5px;
     background-color: red;
-   
+
 }
 .button-container{
     display: inline-block;
