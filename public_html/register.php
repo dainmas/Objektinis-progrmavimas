@@ -103,7 +103,7 @@ function form_success($filtered_input, &$form) {
     var_dump($filtered_input);
     $user =  new App\Users\User($filtered_input);
     var_dump($user);
-//    $modelDrinks->insert($user);
+    $modelDrinks->insert($user);
     
 //    header('Location: login.php');
    

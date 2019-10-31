@@ -39,8 +39,8 @@ $drinks = $modelDrinks->get();
 $user = new App\Users\User([
     'name' => 'Mano',
     'email' => 'emailas',
-    'password' => 'passwordas', 
-]);
+    'password' => 'passwordas',
+        ]);
 
 var_dump($user->getData());
 
@@ -103,22 +103,22 @@ $form = [
             'label' => 'Image URL:',
             'extra' => [
                 'attr' => [
-                    'placeholder' => 'Paveikslelio nuoroda',
+                    'placeholder' => 'Paveikslėlio nuoroda',
                 ],
             ],
             'validators' => [
                 'validate_not_empty',
             ],
         ],
-        
-        
     ],
     'buttons' => [
         'insert' => [
             'type' => 'submit',
+            'class'=>'insert'
         ],
         'delete' => [
             'type' => 'submit',
+            'class'=>'delete'
         ],
     ],
     'validators' => [
@@ -164,17 +164,17 @@ switch ($button) {
     </head>
     <body>
         <div class="form-container">
-<?php require('../core/templates/form.tpl.php'); ?>
+            <?php require('../core/templates/form.tpl.php'); ?>
         </div>
         <div class="catalogue">
-<?php foreach ($modelDrinks->get() as $drink): ?>
+            <?php foreach ($modelDrinks->get() as $drink): ?>
                 <div class="bottle">
                     <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
                     <div class='name'><?php print "Pavadinimas: {$drink->getName()}"; ?></div>
                     <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
                     <div class="Amount"><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
                 </div>
-<?php endforeach; ?>
+            <?php endforeach; ?>
         </div>
     </body>
 </html>

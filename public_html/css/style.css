@@ -1,18 +1,37 @@
 .catalogue {
-	width: 600px;
-	margin: 0 auto;
+    width: 1000px;
+    margin: 0 auto;
 }
 
 .bottle {
-	display: inline-block;
-	margin: 0 5px;
-	text-align: center;
+    display: inline-block;
+    margin: 0 5px;
+    text-align: center;
 }
 
 img {
-	height: 100px;
+    height: 200px;
 }
 
 label span {
-	display: block;
+    display: block;
+}
+
+.insert{
+    margin: 5px;
+    background-color: green;
+    
+}
+
+.delete{
+    margin: 5px;
+    background-color: red;
+   
+}
+.button-container{
+    display: inline-block;
+}
+
+.field-container{
+    margin: 10px;
 }
