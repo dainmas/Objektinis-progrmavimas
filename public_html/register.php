@@ -1,134 +1,119 @@
 <?php
+
 require '../bootloader.php';
 
-$form = [
-    'attr' => [
-//        'action' => 'index.php',
-        'class' => 'bg-black'
-    ],
-    'title' => 'Registracijos forma',
-    'fields' => [
-        'name' => [
-            'type' => 'text',
-            'value' => '',
-            'label' => 'Vardas*:',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Enter your name',
-                    'class' => 'input-text',
-                    'id' => 'name'
-                ]
-            ],
-
-            'validators' => [
-                'validate_not_empty',
-            ]
-        ],
-        'email' => [
-            'type' => 'text',
-            'value' => '',
-            'label' => 'Email*:',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Enter email',
-                    'class' => 'input-text',
-                    'id' => 'email'
-                ]
-            ],
-
-            'validators' => [
-                'validate_not_empty',
-//                'validate_is_email',
-//                'validate_email_unique'
-            ]
-        ],
-        'password' => [
-            'type' => 'password',
-            'label' => 'Password*:',
-            'value' => '',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Enter your password',
-                    'class' => 'input-text',
-                    'id' => 'password'
-                ]
-            ],
-
-            'validators' => [
-                'validate_not_empty',
-                'validate_password', //8 ženklai
-            ]
-        ],
-        'password_repeat' => [
-            'type' => 'password',
-            'label' => 'Repeat password*:',
-            'value' => '',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Repeat your password',
-                    'class' => 'input-text',
-                    'id' => 'password_repeat'
-                ]
-            ],
-
-            'validators' => [
-                'validate_not_empty',
-            ]
-        ],
-    ],
-    'buttons' => [
-        'Registruokis' => [
-            'type' => 'submit',
-            'value' => 'Registruokis',
-            'class' => 'Registruokis',
-        ],
-    ],
-    'validators' => [
-        'validate_fields_match' => [
-            'password', //$params
-            'password_repeat' //
-        ],
-    ],
-    'message' => 'Užpildyk formą!',
-    'callbacks' => [
-        'success' => 'form_success',
-        'fail' => 'form_fail'
-    ]
-];
-
-function form_success($filtered_input, &$form) {
-    $form['message'] = 'Success!';
-
-    $modelDrinks = new \App\Users\Model();
-    var_dump($filtered_input);
-    $user =  new App\Users\User($filtered_input);
-    var_dump($user);
-    $modelDrinks->insert($user);
-    
-//    header('Location: login.php');
-   
+if (isset($_SESSION['logged_in_user'])) {
+	header('Location: index.php');
 }
 
+$form = [
+	'title' => 'Registracija',
+	'fields' => [
+		'name' => [
+			'type' => 'text',
+			'label' => 'Name:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'Vardas'
+				]
+			],
+			'validators' => [
+				'validate_not_empty'
+			]
+		],
+		'email' => [
+			'type' => 'text',
+			'label' => 'Email:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'email@email.com'
+				]
+			],
+			'validators' => [
+				'validate_not_empty',
+				'validate_email_unique'
+			]
+		],
+		'password' => [
+			'type' => 'password',
+			'label' => 'New password:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'slaptažodis'
+				]
+			],
+			'validators' => [
+				'validate_not_empty'
+			]
+		],
+		'password_repeat' => [
+			'type' => 'password',
+			'label' => 'Repeat password:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'Pakartoti slaptažodį'
+				]
+			],
+			'validators' => [
+				'validate_not_empty'
+			]
+		],
+	],
+	'buttons' => [
+		'register' => [
+			'type' => 'submit',
+			'class' => 'button'
+		]
+	],
+	'validators' => [
+		'validate_fields_match' => [
+			'password',
+			'password_repeat'
+		]
+	],
+	'callbacks' => [
+		'success' => 'form_success',
+		'fail' => 'form_fail'
+	]
+];
+
 function form_fail($filtered_input, &$form) {
-    $form['message'] = 'Yra klaidų!';
+	unset($form['fields']['password']['value']);
+	unset($form['fields']['password_repeat']['value']);
+}
+
+function form_success($filtered_input, $form) {
+	$modelUser = new \App\Users\Model();
+	$user = new App\Users\User($filtered_input);
+	$modelUser->insert($user);
+	
+	header('Location: login.php');
 }
 
 $filtered_input = get_filtered_input($form);
 
 if (!empty($filtered_input)) {
-    validate_form($filtered_input, $form);
+	validate_form($filtered_input, $form);
 }
 
 ?>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Form Registration</title>
-        <link rel="stylesheet" href="includes/style.css">
-    </head>
-    <body class="registracion-bg">
-        <div class="formos-fonas">
-            <div><?php require ROOT . '/core/templates/form.tpl.php'; ?></div>>
-        </div>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Register</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<!--Require navigation-->
+		<?php require ROOT . '/app/templates/nav.tpl.php'; ?>
+		
+		<!--Require form template-->
+		<?php require ROOT . '/core/templates/form.tpl.php'; ?>
+		
+		<div class="wrapper">
+			<p>Arba <a href="login.php">prisijunk!</a></p>
+		</div>
     </body>
 </html>

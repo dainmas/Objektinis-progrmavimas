@@ -1,109 +1,89 @@
 <?php
 
-
-
 require '../bootloader.php';
 
+if (isset($_SESSION['logged_in_user'])) {
+	header('Location: index.php');
+}
+
 $form = [
-    'title' => 'Login form',
-    'fields' => [
-        'email' => [
-            'type' => 'text',
-            'value' => '',
-            'label' => 'Email*:',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Enter email',
-                    'class' => 'input-text',
-                    'id' => 'email'
-                ]
-            ],
-            'validators' => [
-                'validate_not_empty',
-                'validate_is_email',
-            ]
-        ],
-        'password' => [
-            'type' => 'password',
-            'label' => 'Password*:',
-            'value' => '',
-            'extra' => [
-                'attr' => [
-                    'placeholder' => 'Enter your password',
-                    'class' => 'input-text',
-                    'id' => 'password'
-                ]
-            ],
-            'validators' => [
-                'validate_not_empty',
-                'validate_password', //8 ženklai
-            ]
-        ]
-    ],
-    'buttons' => [
-        'Login' => [
-            'type' => 'submit',
-            'class' => 'loginr',
-        ],
-    ],
-    'callbacks' => [
-        'success' => 'form_success',
-        'fail' => 'form_fail'
-    ]
+	'title' => 'Prisijungti',
+	'fields' => [
+		'email' => [
+			'type' => 'text',
+			'label' => 'Email:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'email@email.com'
+				]
+			],
+			'validators' => [
+				'validate_not_empty',
+				'validate_email_exists'
+			]
+		],
+		'password' => [
+			'type' => 'password',
+			'label' => 'New password:',
+			'extra' => [
+				'attr' => [
+					'placeholder' => 'slaptažodis'
+				]
+			],
+			'validators' => [
+				'validate_not_empty'
+			]
+		]
+	],
+	'buttons' => [
+		'login' => [
+			'type' => 'submit',
+			'class' => 'button'
+		]
+	],
+	'validators' => [
+		'validate_login'
+	],
+	'callbacks' => [
+		'success' => 'form_success',
+		'fail' => 'form_fail'
+	]
 ];
 
-function validate_login($filtered_input, &$form) {
-    $users_array = file_to_array('data/users.txt');
-    if (!empty($users_array)) {
-        foreach ($users_array as $user) {
-            if (strtoupper($user['email']) === strtoupper($filtered_input['email']) && $user['password'] === $filtered_input['password']) {
-                return true;
-            }
-        }
-        $form['fields']['password']['error'] = 'Tokio naudotojo nėra!';
-        return false;
-    }
-}
-
-function form_success($filtered_input, &$form) {
-    $users_array = file_to_array('data/users.txt');
-    
-    if (!empty($users_array)) {
-        foreach ($users_array as $user) {
-            if (strtoupper($user['email']) === strtoupper($filtered_input['email'])) {
-                $_SESSION['cookie_user_name'] = $user['full_name'];
-            }
-        }
-    }
-    
-    $_SESSION['cookie_email'] = $filtered_input['email'];
-    $_SESSION['cookie_password'] = $filtered_input['password'];
-    
-    //    setcookie('cookie_email', $filtered_input['email'], time() + (86400 * 30), '/');
-
-    header('Location: index.php');
-}
-
 function form_fail($filtered_input, &$form) {
-    $form['message'] = 'Yra klaidų!';
+	unset($form['fields']['password']['value']);
+}
+
+function form_success($filtered_input, $form) {
+	$modelUser = new \App\Users\Model();
+	$_SESSION['logged_in_user'] = $modelUser->get($filtered_input)[0];
+	
+	header('Location: index.php');
 }
 
 $filtered_input = get_filtered_input($form);
 
 if (!empty($filtered_input)) {
-    validate_form($filtered_input, $form);
+	validate_form($filtered_input, $form);
 }
+
 ?>
 <html>
     <head>
-        <meta charset="UTF-8">
-        <title>Login form</title>
-        <link rel="stylesheet" href="includes/style.css">
-    </head>
-    <body class="registracion-bg">
-       
-        <div class="formos-fonas">
-            <div><?php require  ROOT . '/core/templates/form.tpl.php'; ?></div>>
-        </div>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Login</title>
+		<link rel="stylesheet" href="css/normalize.css">
+		<link rel="stylesheet" href="css/style.css">
+	</head>
+	<body>
+		<!--Require navigation-->
+		<?php require ROOT . '/app/templates/nav.tpl.php'; ?>
+		
+		<!--Require form template-->
+		<?php require ROOT . '/core/templates/form.tpl.php'; ?>
+		<div class="wrapper">
+			<p>Arba <a href="register.php">registruotis!</a></p>
+		</div>
     </body>
 </html>
