@@ -1,14 +1,14 @@
 <div class="form-container wrapper">
-	<?php if (isset($form) && !empty($form)): ?>
-		<form <?php print html_attr(($form['attr'] ?? []) + ['method' => 'POST']); ?>>
+	<?php if (isset($data) && !empty($data)): ?>
+		<form <?php print html_attr(($data['attr'] ?? []) + ['method' => 'POST']); ?>>
 
 			<!--Form Title-->	
-			<?php if (isset($form['title'])): ?>
-				<h2><?php print $form['title']?></h2>
+			<?php if (isset($data['title'])): ?>
+				<h2><?php print $data['title']?></h2>
 			<?php endif; ?>
 
 			<!--Start Field Generation-->
-			<?php foreach ($form['fields'] ?? [] as $field_id => $field): ?>
+			<?php foreach ($data['fields'] ?? [] as $field_id => $field): ?>
 				<div class="field-container">
 
 					<!--Label-->
@@ -48,8 +48,8 @@
 			<!--End Field Generation-->
 
 			<!--Start Button Generation-->
-			<?php if (isset($form['buttons'])): ?>
-				<?php foreach ($form['buttons'] as $button_id => $button): ?>
+			<?php if (isset($data['buttons'])): ?>
+				<?php foreach ($data['buttons'] as $button_id => $button): ?>
 					<div class="button-container">
 						<input <?php print html_attr(['name' => 'action', 'value' => $button_id] + $button); ?>>
 					</div>
@@ -58,9 +58,9 @@
 			<!--End button Generation-->
 
 			<!--Form Message-->	
-			<?php if (isset($form['message'])): ?>
+			<?php if (isset($data['message'])): ?>
 				<div class="message">
-					<span><?php print $form['message']?></span>
+					<span><?php print $data['message']?></span>
 				</div>
 			<?php endif; ?>
 		</form>

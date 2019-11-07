@@ -88,11 +88,49 @@ switch ($button) {
         break;
 }
 
+$navigation = [
+    'image' => 'https://buvu.co.uk/files/e/7301/na22235-png.png',
+    'links' => [
+        [
+            'url' => '/drinks.php',
+            'title' => 'Drinks',
+        ],
+        [
+            'url' => '/register.php',
+            'title' => 'Register',
+        ],
+        [
+            'url' => '/login.php',
+            'title' => 'Login',
+        ],
+        [
+            'url' => '/logout.php',
+            'title' => 'Logout',
+        ]
+    ]
+];
+
+//<div class="topnav">
+//    <div class="logo-container">
+//        <div class="logo"></div>
+//    </div>
+//    <a href="drinks.php">Drinks</a>
+//    <a href="register.php">Register</a>
+//    <a href="login.php">Login</a>
+//    <a href="logout.php" class="logout">Logout</a>
+//</div>
+//];
+
+//sukuriam 2 objektus is klases View:
+$formView = new Core\View($form);
+$navigationView = new Core\View($navigation);
+
+
 $cookie = new Core\Cookie('naujas-kukis');
-$cookie->save(['verte']);
-$cookie->exists();
-var_dump($cookie->read());
-$cookie->delete();
+//$cookie->save(['verte']);
+//$cookie->exists();
+//var_dump($cookie->read());
+//$cookie->delete();
 ?>
 <html>
     <head>
@@ -103,17 +141,12 @@ $cookie->delete();
         <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
-        <!--Require navigation-->
-        <?php require ROOT . '/app/templates/nav.tpl.php'; ?>
 
+        <?php print $navigationView->render(ROOT . '/core/templates/navigation.tpl.php'); ?>
+        
         <!--Require form template-->
-        <?php if (isset($_SESSION['logged_in_user'])): ?>
-            <?php require ROOT . '/core/templates/form.tpl.php'; ?>
-        <?php else: ?>
-            <div class="wrapper">
-                <p>Nori įrašyti gėrimą? <a href="login.php">Prisijunk!</a></p>
-            </div>
-        <?php endif; ?>
+       
+            <?php print $formView->render(ROOT . '/core/templates/form.tpl.php'); ?>
 
         <div class="catalogue">
             <div class="wrapper">
@@ -121,8 +154,8 @@ $cookie->delete();
                     <div class="bottle">
                         <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
                         <div class='name'><?php print $drink->getName(); ?></div>
-                        <div class="abarot"><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
-                        <div class="Amount"><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
+                        <div class='abarot'><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
+                        <div class='amount'><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
