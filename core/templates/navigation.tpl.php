@@ -7,7 +7,7 @@
             <?php if(isset($data['links'])): ?>
                 <ul>
                     <?php foreach ($data['links'] as $link): ?>
-                        <li><a href="<?php print $link['url']; ?>"><?php print $link['title']; ?></a></li>
+                    <li><a class="<?php print $link['class']; ?>" href="<?php print $link['url']; ?>"><?php print $link['title']; ?></a></li>
                     <?php endforeach;?>
                 </ul>
             <?php endif; ?>

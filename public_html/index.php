@@ -94,18 +94,22 @@ $navigation = [
         [
             'url' => '/drinks.php',
             'title' => 'Drinks',
+            'class' => 'btn'
         ],
         [
             'url' => '/register.php',
             'title' => 'Register',
+            'class' => 'btn'
         ],
         [
             'url' => '/login.php',
             'title' => 'Login',
+            'class' => 'btn'
         ],
         [
             'url' => '/logout.php',
             'title' => 'Logout',
+            'class' => 'btn'
         ]
     ]
 ];
@@ -121,9 +125,12 @@ $navigation = [
 //</div>
 //];
 
+
 //sukuriam 2 objektus is klases View:
 $formView = new Core\View($form);
 $navigationView = new Core\View($navigation);
+
+var_dump($navigation);
 
 
 $cookie = new Core\Cookie('naujas-kukis');
@@ -143,10 +150,8 @@ $cookie = new Core\Cookie('naujas-kukis');
     <body>
 
         <?php print $navigationView->render(ROOT . '/core/templates/navigation.tpl.php'); ?>
-        
-        <!--Require form template-->
-       
-            <?php print $formView->render(ROOT . '/core/templates/form.tpl.php'); ?>
+
+        <?php print $formView->render(ROOT . '/core/templates/form.tpl.php'); ?>
 
         <div class="catalogue">
             <div class="wrapper">
@@ -155,10 +160,11 @@ $cookie = new Core\Cookie('naujas-kukis');
                         <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
                         <div class='name'><?php print $drink->getName(); ?></div>
                         <div class='abarot'><?php print"Laipsniai: {$drink->getAbarot()} %"; ?></div>
-                        <div class='amount'><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
+                        <div class='Amount'><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
                     </div>
                 <?php endforeach; ?>
             </div>
         </div>
+        <script src="js/app.js"></script>
     </body>
 </html>

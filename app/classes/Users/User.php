@@ -88,4 +88,5 @@ class User {
 		return $this->data['password'];
 	}
 
+        $navigation = $this->data;
 }
