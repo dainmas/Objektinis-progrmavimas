@@ -124,8 +124,6 @@ $navigation = [
 //    <a href="logout.php" class="logout">Logout</a>
 //</div>
 //];
-
-
 //sukuriam 2 objektus is klases View:
 $formView = new Core\View($form);
 $navigationView = new Core\View($navigation);
@@ -155,6 +153,7 @@ $cookie = new Core\Cookie('naujas-kukis');
 
         <div class="catalogue">
             <div class="wrapper">
+                
                 <?php foreach ($modelDrinks->get() as $drink): ?>
                     <div class="bottle">
                         <img src="<?php print $drink->getImage(); ?>" alt="<?php $drink->getName(); ?>">
@@ -163,8 +162,12 @@ $cookie = new Core\Cookie('naujas-kukis');
                         <div class='Amount'><?php print "Tūris {$drink->getAmount()} ml"; ?></div>
                     </div>
                 <?php endforeach; ?>
+                
+                
             </div>
         </div>
         <script src="js/app.js"></script>
+        <script src="js/fetch.js"></script>
+
     </body>
 </html>

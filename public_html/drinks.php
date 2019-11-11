@@ -55,6 +55,35 @@ if (!empty($filtered_input)) {
 }
 
 
+$navigation = [
+    'image' => 'https://buvu.co.uk/files/e/7301/na22235-png.png',
+    'links' => [
+        [
+            'url' => '/drinks.php',
+            'title' => 'Drinks',
+            'class' => 'btn'
+        ],
+        [
+            'url' => '/register.php',
+            'title' => 'Register',
+            'class' => 'btn'
+        ],
+        [
+            'url' => '/login.php',
+            'title' => 'Login',
+            'class' => 'btn'
+        ],
+        [
+            'url' => '/logout.php',
+            'title' => 'Logout',
+            'class' => 'btn'
+        ]
+    ]
+];
+
+
+
+
 $formView = new Core\View($form);
 $navigationView = new Core\View($navigation);
 ?>
